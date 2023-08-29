@@ -1,0 +1,239 @@
+openapi: 3.0.1
+servers:
+  - description: Index swagger
+    #url local
+    -url: https://localhost:8080
+    #url produccion
+    url: https://api.mibanco.com.co
+info:
+  description: Servicios de entidad creacion de catalogo.
+  version: 0.0.1
+  title: Catalogo_ES
+  contact:
+    name: MiBanco
+    url: https://www.mibanco.com.co/
+    email: api@mibanco.com.co
+  license:
+    name: GNU GPLv3
+    url: ‘https://www.gnu.org/licenses/gpl-3.0.html’
+tags:
+  - name: Catalogo
+    description: Gestion de catalogos
+#----------------------------
+#Endpoints del Entidad
+#----------------------------
+paths:
+  /v1/es/catalogo:
+    post:
+      summary: Crear catalogo
+      operationId: crearCatalogo
+      requestBody:
+        description: catalogo type
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CatalogoType"
+      responses:
+        "200":
+          description: create catalogo.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/CatalogoType"
+        "400":
+          description: Peticion con datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: "No se encontro datos de catalogo"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Actualizar Catalogo
+      operationId: updateCatalogo
+      requestBody:
+        description: catalogo type
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CatalogoType"
+      responses:
+        "200":
+          description: update Contalogo.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/CatalogoType"
+        "400":
+          description: Peticion con datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: "No se encontro datos de Catalogo"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/es/catalogo/{idCatalogo}:
+    get:
+      summary: Consulta catalogo
+      operationId: ConsultarCatalogo
+      parameters:
+        - in: path
+          name: idCatalogo
+          required: true
+          schema:
+            type: string
+          description: id catalogo
+      responses:
+        "200":
+          description: get Catalogo.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/CatalogoType"
+        "400":
+          description: Peticion con datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: "No se encontro datos de Catalogo"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Eliminar catalogo
+      operationId: DeleteCatalogo
+      parameters:
+        - in: path
+          name: idCatalogo
+          required: true
+          schema:
+            type: string
+          description: id catalogo
+      responses:
+        "200":
+          description: delete Catalogo.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        "400":
+          description: Peticion con datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: "No se encontro datos de Catalogo"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/es/catalogo/{nombre}:
+    get:
+      summary: Consulta catalogo por nombre
+      operationId: ConsultarCatalogoPorNombre
+      parameters:
+        - in: path
+          name: nombre
+          required: true
+          schema:
+            type: string
+          description: nombre catalogo
+      responses:
+        "200":
+          description: get catalogo by nombre.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CatalogoType"
+        "400":
+          description: Peticion con datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: "No se encontro datos de Catalogo"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+
+#---------------------------------------------
+#Se declaran los Modelos/Schemas del servicio
+#---------------------------------------------
+
+components:
+  schemas:
+    #    TYPES
+    CatalogoType:
+      type: object
+      properties:
+        codigoDetalleCatalogo:
+          type: string
+        descripcionDetalleCatalogo:
+          type: string
+        idCatalogo:
+          type: string
+        nombreCatalogo:
+          type: string
+        padreIDCatalogo:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "The request is invalid."
+      required:
+        - status
+        - message
+
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
