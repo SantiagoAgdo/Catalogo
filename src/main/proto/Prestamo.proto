@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+//Configs
+
+option java_multiple_files = true;
+option java_package = "com.mibanco.catalogo.es";
+option java_outer_classname = "CatalogoGrpc";
+
+package CatalogoGrpc;
+
+//Types
+
+message CatalogoTypeGrpc {
+  string codigoDetalleCatalogo = 1;
+  string descripcionDetalleCatalogo = 2;
+  string idCatalogo = 3;
+  string nombreCatalogo = 4;
+  string padreIDCatalogo = 5;
+}
+
+//Responses
+
+message ResponseCatalogo{
+  CatalogoTypeGrpc obj = 1;
+}
+
+message ResponseCatalogoList{
+  repeated CatalogoTypeGrpc obj = 1;
+}
+
+message DataConsulta{
+  string id = 1;
+}
+
+message ResponseTxt{
+  string txt = 1;
+}
+
+//Services
+
+service ClienteFICServiceGrpc {
+  rpc crearCatalogo(CatalogoTypeGrpc) returns (ResponseCatalogo);
+  rpc actualizarCatalogo(CatalogoTypeGrpc) returns (ResponseCatalogo);
+  rpc eliminarCatalogoPorId(DataConsulta) returns (ResponseTxt);
+  rpc consultarCatalogoPorId(DataConsulta) returns (ResponseCatalogo);
+  rpc consultarCatalogoPorNombre(DataConsulta) returns (stream ResponseCatalogoList);
+}
+
+

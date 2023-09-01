@@ -29,10 +29,10 @@ public class CatalogoValidator {
 //        }
     }
 
-    public void validarConsulta(Integer numeroCliente) {
-        if (numeroCliente == null) {
+    public void validarConsulta(String idCatalogo) {
+        if (idCatalogo == null) {
             throw new ApplicationExceptionValidation(
-                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.VALIDACION + " numero de Cliente, valor no debe ser nulo."
+                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.VALIDACION + " Id no debe ser nulo."
             );
         }
     }
