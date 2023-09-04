@@ -1,9 +1,6 @@
 openapi: 3.0.1
 servers:
   - description: Index swagger
-    #url local
-    -url: https://localhost:8080
-    #url produccion
     url: https://api.mibanco.com.co
 info:
   description: Servicios de entidad creacion de catalogo.
@@ -210,18 +207,6 @@ components:
           type: string
         padreIDCatalogo:
           type: string
-      constructor:
-        properties:
-          codigoDetalleCatalogo:
-            type: string
-          descripcionDetalleCatalogo:
-            type: string
-          idCatalogo:
-            type: string
-          nombreCatalogo:
-            type: string
-          padreIDCatalogo:
-            type: string
     Error:
       type: object
       properties:
