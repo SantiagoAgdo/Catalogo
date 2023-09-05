@@ -21,6 +21,7 @@ public class CatalogoDao implements ICatalogo {
 
 
     List<CatalogoEntity> list = new ArrayList<>();
+
     @Override
     public void crearCatalogo(CatalogoEntity catalogo) {
         list.add(catalogo);
@@ -29,17 +30,17 @@ public class CatalogoDao implements ICatalogo {
     @Override
     public CatalogoType actualizarCatalogo(CatalogoEntity catalogo) {
         int index = catalogoExiste(catalogo.getIdCatalogo());
-        if (index == -1){
+        if (index == -1) {
             return null;
         }
-        list.set(index, new CatalogoEntity(catalogo.getCodigoDetalleCatalogo(),  catalogo.getDescripcionDetalleCatalogo(),catalogo.getIdCatalogo(), catalogo.getNombreCatalogo(), catalogo.getPadreIDCatalogo() ));
+        list.set(index, new CatalogoEntity(catalogo.getCodigoDetalleCatalogo(), catalogo.getDescripcionDetalleCatalogo(), catalogo.getIdCatalogo(), catalogo.getNombreCatalogo(), catalogo.getPadreIDCatalogo()));
         return mapper.catalogoToType(catalogo);
     }
 
     @Override
     public boolean eliminarCatalogoPorId(String id) {
         int index = catalogoExiste(id);
-        if (index == -1){
+        if (index == -1) {
             return false;
         }
         list.remove(list.get(index));
@@ -53,28 +54,27 @@ public class CatalogoDao implements ICatalogo {
                 .findFirst()
                 .orElse(null);
 
-        if (catalogo != null){
+        if (catalogo != null) {
             return mapper.catalogoToType(catalogo);
         }
         return new CatalogoType();
     }
 
     @Override
-    public  List<CatalogoEntity> consultarCatalogoPorNombre(String nombre) {
+    public List<CatalogoEntity> consultarCatalogoPorNombre(String nombre) {
         List<CatalogoEntity> catalogo = list.stream()
                 .filter(x -> x.getNombreCatalogo().equals(nombre))
                 .collect(Collectors.toList());
 
-        if (catalogo != null){
+        if (catalogo != null) {
             return catalogo;
         }
         return new ArrayList<>();
     }
 
-    int catalogoExiste(String id){
+    int catalogoExiste(String id) {
         for (CatalogoEntity catalogo : list) {
             if (catalogo.getIdCatalogo().equals(id)) {
-                ;
                 return list.indexOf(catalogo);
             }
         }

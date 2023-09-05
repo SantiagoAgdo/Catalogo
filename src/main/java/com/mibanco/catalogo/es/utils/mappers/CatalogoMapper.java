@@ -21,6 +21,5 @@ public class CatalogoMapper {
         return new ModelMapper().map(entity, CatalogoType.class);
     }
 
-
 }
 

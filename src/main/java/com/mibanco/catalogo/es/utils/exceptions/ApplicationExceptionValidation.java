@@ -12,7 +12,6 @@ public class ApplicationExceptionValidation extends RuntimeException {
         this.status = status;
     }
 
-
     public int getStatus() {
         return status;
     }

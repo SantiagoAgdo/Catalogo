@@ -8,25 +8,38 @@ import jakarta.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-
 @ApplicationScoped
 public class CatalogoValidator {
 
     public static final Logger logger = LoggerFactory.getLogger(CatalogoValidator.class);
 
-    private String msmError = "";
+    public void verificarCatalogo(CatalogoType catalogo) throws ApplicationExceptionValidation {
 
-    public void verificarCatalogo(CatalogoType prestamoType) throws ApplicationExceptionValidation {
-
-//        if (validarObjeto()) {
-//            throw new ApplicationExceptionValidation(
-//                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + msmError + " obligatorios"
-//            );
-//        }
+        if (catalogo.getIdCatalogo() != null) {
+            throw new ApplicationExceptionValidation(
+                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Id " + " obligatorio"
+            );
+        }
+        if (catalogo.getNombreCatalogo() != null) {
+            throw new ApplicationExceptionValidation(
+                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Nombre " + " obligatorio"
+            );
+        }
+        if (catalogo.getPadreIDCatalogo() != null) {
+            throw new ApplicationExceptionValidation(
+                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "IDPadre " + " obligatorio"
+            );
+        }
+        if (catalogo.getDescripcionDetalleCatalogo() != null) {
+            throw new ApplicationExceptionValidation(
+                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Descripcion " + " obligatorio"
+            );
+        }
+        if (catalogo.getCodigoDetalleCatalogo() != null) {
+            throw new ApplicationExceptionValidation(
+                    Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Codigo " + " obligatorio"
+            );
+        }
     }
 
     public void validarConsulta(String idCatalogo) {
