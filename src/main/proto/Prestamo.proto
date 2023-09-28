@@ -38,7 +38,7 @@ message ResponseTxt{
 
 //Services
 
-service ClienteFICServiceGrpc {
+service CatalogoServiceGrpc {
   rpc crearCatalogo(CatalogoTypeGrpc) returns (ResponseCatalogo);
   rpc actualizarCatalogo(CatalogoTypeGrpc) returns (ResponseCatalogo);
   rpc eliminarCatalogoPorId(DataConsulta) returns (ResponseTxt);

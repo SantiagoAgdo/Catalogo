@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @GrpcService
-public class CatalogoGrpcController extends ClienteFICServiceGrpcGrpc.ClienteFICServiceGrpcImplBase {
+public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServiceGrpcImplBase {
 
     public static final Logger LOG = LoggerFactory.getLogger(CatalogoGrpcController.class);
 
@@ -89,9 +89,9 @@ public class CatalogoGrpcController extends ClienteFICServiceGrpcGrpc.ClienteFIC
         try {
             catalogoService.eliminarCatalogoPorId(request.getId());
             ResponseTxt txt = ResponseTxt.newBuilder().setTxt("Eliminado Correctamente").build();
-            LOG.info("Finaliza Actualizacion Catalogo por GRPC");
-
             responseObs.onNext(txt);
+
+            LOG.info("Finaliza Actualizacion Catalogo por GRPC");
             responseObs.onCompleted();
 
         } catch (Exception e) {
