@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mibanco.catalogo.es.CatalogoServiceGrpc;
 import com.mibanco.catalogo.es.CatalogoTypeGrpc;
 import com.mibanco.catalogo.es.DataConsulta;
+import com.mibanco.catalogo.es.dao.entity.CatalogoEntity;
 import com.mibanco.catalogo.es.gen.type.CatalogoType;
+import com.mibanco.catalogo.es.services.impl.CatalogoServiceImpl;
 import com.mibanco.catalogo.es.utils.mappers.CatalogoGrpcMapper;
 import io.quarkus.grpc.GrpcClient;
 import io.quarkus.test.junit.QuarkusTest;
@@ -19,19 +21,20 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @QuarkusTest
 public class CatalogoGRPCTest {
 
     @GrpcClient
     CatalogoServiceGrpc client;
+
+    @Inject
+    CatalogoServiceImpl serviceImpl;
 
     @Inject
     ObjectMapper objectMapper;
@@ -53,11 +56,9 @@ public class CatalogoGRPCTest {
 
     public CatalogoTypeGrpc getCatalogoGrpc() throws IOException {
 
-        // Preparación de datos
         String jsonString = new String(Files.readAllBytes(Paths.get("src/main/resources/json/es-Catalogo.json")), StandardCharsets.UTF_8);
         CatalogoType clienteType = objectMapper.readValue(jsonString, CatalogoType.class);
 
-        //Se retorna la data dataType a protobuf
         return mapperGRPC.catalogoToGrpc(clienteType);
     }
 
@@ -66,16 +67,12 @@ public class CatalogoGRPCTest {
 
         CatalogoTypeGrpc catalogo = this.getCatalogoGrpc();
 
-        //Variable para guargar la respuesta de gRPC
         CompletableFuture<CatalogoTypeGrpc> message = new CompletableFuture<>();
 
-        //Llamado del servicio
         client.crearCatalogo(catalogo)
                 .subscribe()
                 .with(reply -> message.complete(reply.getObj()));
 
-
-        //Test del servicio
         Assertions.assertThat(message.get(5, TimeUnit.SECONDS)).isEqualTo(catalogo);
 
     }
@@ -85,18 +82,12 @@ public class CatalogoGRPCTest {
 
         CatalogoTypeGrpc catalogo = this.getCatalogoGrpc();
 
-        //Variable para guargar la respuesta de gRPC
         CompletableFuture<CatalogoTypeGrpc> message = new CompletableFuture<>();
 
-        //Llamado del servicio
         client.actualizarCatalogo(catalogo)
                 .subscribe()
                 .with(reply -> message.complete(reply.getObj()));
 
-        System.out.println("Lo esperado..." + message.get(5, TimeUnit.SECONDS));
-        System.out.println("Lo comparado..." + catalogo);
-
-        //Test del servicio
         Assertions.assertThat(message.get(5, TimeUnit.SECONDS)).isEqualTo(catalogo);
 
     }
@@ -119,6 +110,7 @@ public class CatalogoGRPCTest {
     @Test
     public void consultarCatalogoID() throws IOException, ExecutionException, InterruptedException, TimeoutException {
 
+        this.creatCatalogoMock();
         CatalogoTypeGrpc catalogo = this.getCatalogoGrpc();
 
         CompletableFuture<CatalogoTypeGrpc> message = new CompletableFuture<>();
@@ -130,21 +122,34 @@ public class CatalogoGRPCTest {
                 .with(reply -> message.complete(reply.getObj()));
 
 
-        System.out.println("Lo esperado..." + message.get(5, TimeUnit.SECONDS));
-        System.out.println("Lo comparado..." + catalogo);
-
         Assertions.assertThat(message.get(5, TimeUnit.SECONDS)).isEqualTo(catalogo);
 
     }
 
-    public CatalogoTypeGrpc getCatalogoGrpcNl() throws IOException {
+    @Test
+    public void consultarCatalogoNombre() throws IOException, ExecutionException, InterruptedException, TimeoutException {
 
-        // Preparación de datos
-        String jsonString = new String(Files.readAllBytes(Paths.get("src/main/resources/json/es-CatalogoGet.json")), StandardCharsets.UTF_8);
-        CatalogoType clienteType = objectMapper.readValue(jsonString, CatalogoType.class);
+        this.creatCatalogoMock();
 
-        //Se retorna la data dataType a protobuf
-        return mapperGRPC.catalogoToGrpc(clienteType);
+        CompletableFuture<List<CatalogoTypeGrpc>> message = new CompletableFuture<>();
+
+        DataConsulta id = DataConsulta.newBuilder().setId("500").build();
+
+        client.consultarCatalogoPorNombre(id)
+                .subscribe()
+                .with(reply -> message.complete(reply.getObjList()));
+
+
+        Assertions.assertThat(message.get(5, TimeUnit.SECONDS)).asList();
+
+    }
+
+
+    public void creatCatalogoMock() throws IOException {
+        String jsonString = new String(Files.readAllBytes(Paths.get("src/main/resources/json/es-Catalogo.json")), StandardCharsets.UTF_8);
+        CatalogoEntity catalogo = objectMapper.readValue(jsonString, CatalogoEntity.class);
+
+        serviceImpl.crearCatalogo(catalogo);
     }
 
 }

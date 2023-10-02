@@ -88,8 +88,8 @@ public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServ
 
         try {
             catalogoService.eliminarCatalogoPorId(request.getId());
-            ResponseTxt txt = ResponseTxt.newBuilder().setTxt("Eliminado Correctamente").build();
-            responseObs.onNext(txt);
+            ResponseTxt responseTexto = ResponseTxt.newBuilder().setTxt("Eliminado Correctamente").build();
+            responseObs.onNext(responseTexto);
 
             LOG.info("Finaliza Actualizacion Catalogo por GRPC");
             responseObs.onCompleted();

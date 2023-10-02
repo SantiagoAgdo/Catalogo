@@ -2,6 +2,7 @@ package com.mibanco.catalogo.es.catalogo.es.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mibanco.catalogo.es.controller.CatalogoController;
 import com.mibanco.catalogo.es.gen.type.CatalogoType;
 import com.mibanco.catalogo.es.services.impl.CatalogoServiceImpl;
 import com.mibanco.catalogo.es.utils.validator.CatalogoValidator;
@@ -13,11 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static io.restassured.RestAssured.given;
+import static org.mockito.Mockito.mock;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CatalogoControllerTest {
@@ -25,11 +27,25 @@ public class CatalogoControllerTest {
     @Inject
     ObjectMapper objectMapper;
 
+    @Mock
+    CatalogoServiceImpl    catalogoService;
+
+    @Mock
+    CatalogoValidator catalogoValidator;
+
+    @Mock
+    CatalogoController catalogoController;
+
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
+        catalogoService = mock(CatalogoServiceImpl.class);
+        catalogoValidator = mock(CatalogoValidator.class);
+        catalogoController = new CatalogoController();
     }
+
+
 
     @Test
     void crearCatalogoTest() throws IOException {

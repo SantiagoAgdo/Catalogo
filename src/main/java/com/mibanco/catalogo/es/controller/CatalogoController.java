@@ -31,6 +31,7 @@ public class CatalogoController implements V1Catalogo {
 
     @Override
     public Response consultarCatalogo(String idCatalogo) {
+
         LOG.info("Inicia consultarCatalogo en CatalogoController");
         try {
             catalogoValidator.validarConsulta(idCatalogo);
@@ -54,6 +55,7 @@ public class CatalogoController implements V1Catalogo {
 
     @Override
     public Response consultarCatalogoPorNombre(String nombre) {
+
         LOG.info("Inicia consultarCatalogoPorNombre en CatalogoController");
         try {
             catalogoValidator.validarConsulta(nombre);
@@ -77,6 +79,7 @@ public class CatalogoController implements V1Catalogo {
 
     @Override
     public Response crearCatalogo(CatalogoType catalogoType) {
+
         LOG.info("Inicia crearCatalogo en CatalogoController");
         try {
             catalogoValidator.verificarCatalogo(catalogoType);
@@ -101,6 +104,7 @@ public class CatalogoController implements V1Catalogo {
 
     @Override
     public Response deleteCatalogo(String idCatalogo) {
+
         LOG.info("Inicia deleteCatalogo en CatalogoController");
         try {
             catalogoValidator.validarConsulta(idCatalogo);
@@ -124,6 +128,7 @@ public class CatalogoController implements V1Catalogo {
 
     @Override
     public Response updateCatalogo(CatalogoType catalogoType) {
+
         LOG.info("Inicia updateCatalogo en CatalogoController");
         try {
             catalogoValidator.verificarCatalogo(catalogoType);

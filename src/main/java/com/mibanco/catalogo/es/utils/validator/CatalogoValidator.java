@@ -5,37 +5,33 @@ import com.mibanco.catalogo.es.gen.type.CatalogoType;
 import com.mibanco.catalogo.es.utils.exceptions.ApplicationExceptionValidation;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class CatalogoValidator {
 
-    public static final Logger logger = LoggerFactory.getLogger(CatalogoValidator.class);
-
     public void verificarCatalogo(CatalogoType catalogo) throws ApplicationExceptionValidation {
 
-        if (catalogo.getIdCatalogo() != null) {
+        if (catalogo.getIdCatalogo().isEmpty()) {
             throw new ApplicationExceptionValidation(
                     Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Id " + " obligatorio"
             );
         }
-        if (catalogo.getNombreCatalogo() != null) {
+        if (catalogo.getNombreCatalogo().isEmpty()) {
             throw new ApplicationExceptionValidation(
                     Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Nombre " + " obligatorio"
             );
         }
-        if (catalogo.getPadreIDCatalogo() != null) {
+        if (catalogo.getPadreIDCatalogo().isEmpty()) {
             throw new ApplicationExceptionValidation(
                     Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "IDPadre " + " obligatorio"
             );
         }
-        if (catalogo.getDescripcionDetalleCatalogo() != null) {
+        if (catalogo.getDescripcionDetalleCatalogo().isEmpty()) {
             throw new ApplicationExceptionValidation(
                     Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Descripcion " + " obligatorio"
             );
         }
-        if (catalogo.getCodigoDetalleCatalogo() != null) {
+        if (catalogo.getCodigoDetalleCatalogo().isEmpty()) {
             throw new ApplicationExceptionValidation(
                     Response.Status.BAD_REQUEST.getStatusCode(), Constans.SERVICIO_INTERNAL + "Codigo " + " obligatorio"
             );

@@ -26,15 +26,19 @@ public class CatalogoServiceImpl implements CatalogoService {
 
     @Override
     public void crearCatalogo(CatalogoEntity catalogo) {
+
         LOG.info("Inicia Creacion de catalogo  en CatalogoServiceImpl");
         catalogoDao.crearCatalogo(catalogo);
+
         LOG.info("Termina creacion de catalogo en CatalogoServiceImpl");
     }
 
     @Override
     public CatalogoType actualizarCatalogo(CatalogoEntity catalogo) {
+
         LOG.info("Inicia Actualizacion de catalogo  en CatalogoServiceImpl");
         catalogoDao.actualizarCatalogo(catalogo);
+
         LOG.info("Termina Actualizacion de catalogo en CatalogoServiceImpl");
         return mapper.catalogoToType(catalogo);
     }
@@ -42,13 +46,15 @@ public class CatalogoServiceImpl implements CatalogoService {
     @Override
     public void eliminarCatalogoPorId(String id) {
         LOG.info("Inicia eliminarCatalogoPorId  en CatalogoServiceImpl");
-        LOG.info("Termina eliminarCatalogoPorIdo en CatalogoServiceImpl");
         catalogoDao.eliminarCatalogoPorId(id);
+
+        LOG.info("Termina eliminarCatalogoPorIdo en CatalogoServiceImpl");
     }
 
     @Override
     public CatalogoType consultarCatalogoPorId(String id) {
         LOG.info("Inicia consulta de catalogo  en CatalogoServiceImpl");
+
         LOG.info("Termina consulta de catalogo en CatalogoServiceImpl");
         return catalogoDao.consultarCatalogoPorId(id);
 
@@ -57,6 +63,7 @@ public class CatalogoServiceImpl implements CatalogoService {
     @Override
     public List<CatalogoEntity> consultarCatalogoPorNombre(String nombre) {
         LOG.info("Inicia consulta de catalogo por nombre en CatalogoServiceImpl");
+
         LOG.info("Termina consulta de catalogo por nombre en CatalogoServiceImpl");
         return catalogoDao.consultarCatalogoPorNombre(nombre);
     }

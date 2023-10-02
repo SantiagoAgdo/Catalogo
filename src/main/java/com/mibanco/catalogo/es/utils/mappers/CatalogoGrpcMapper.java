@@ -15,6 +15,8 @@ import java.io.IOException;
 public class CatalogoGrpcMapper {
 
     private Gson obj = new Gson();
+
+
     public CatalogoEntity catalogoGrpcToEntity(CatalogoTypeGrpc grpc) {
         return new ModelMapper().map(grpc, CatalogoEntity.class);
     }
