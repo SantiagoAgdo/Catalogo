@@ -1,38 +1,38 @@
 openapi: 3.0.1
 servers:
-  - description: Index swagger
+  - description: Índice Swagger
     url: https://api.mibanco.com.co
 info:
-  description: Servicios de entidad creacion de catalogo.
+  description: Servicios de entidad para la creación de catálogo.
   version: 0.0.1
-  title: Catalogo_ES
+  title: Catálogo_ES
   contact:
     name: MiBanco
     url: https://www.mibanco.com.co/
     email: api@mibanco.com.co
   license:
     name: GNU GPLv3
-    url: ‘https://www.gnu.org/licenses/gpl-3.0.html’
+    url: 'https://www.gnu.org/licenses/gpl-3.0.html'
 tags:
-  - name: Catalogo
-    description: Gestion de catalogos
+  - name: Catálogo
+    description: Gestión de catálogos
 #----------------------------
-#Endpoints del Entidad
+# Endpoints del Entidad
 #----------------------------
 paths:
   /v1/es/catalogo:
     post:
-      summary: Crear catalogo
+      summary: Crear catálogo
       operationId: crearCatalogo
       requestBody:
-        description: catalogo type
+        description: Tipo de catálogo
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/CatalogoType"
       responses:
         "200":
-          description: create catalogo.
+          description: Crear catálogo exitoso.
           content:
             application/json:
               schema:
@@ -40,31 +40,31 @@ paths:
                 items:
                   $ref: "#/components/schemas/CatalogoType"
         "400":
-          description: Peticion con datos invalidos
+          description: Petición con datos inválidos
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: "No se encontro datos de catalogo"
+          description: "No se encontraron datos de catálogo"
         default:
-          description: Unexpected error
+          description: Error inesperado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
-      summary: Actualizar Catalogo
+      summary: Actualizar Catálogo
       operationId: updateCatalogo
       requestBody:
-        description: catalogo type
+        description: Tipo de catálogo
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/CatalogoType"
       responses:
         "200":
-          description: update Contalogo.
+          description: Actualizar catálogo exitoso.
           content:
             application/json:
               schema:
@@ -72,22 +72,22 @@ paths:
                 items:
                   $ref: "#/components/schemas/CatalogoType"
         "400":
-          description: Peticion con datos invalidos
+          description: Petición con datos inválidos
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: "No se encontro datos de Catalogo"
+          description: "No se encontraron datos de Catálogo"
         default:
-          description: Unexpected error
+          description: Error inesperado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
   /v1/es/catalogo/{idCatalogo}:
     get:
-      summary: Consulta catalogo
+      summary: Consultar catálogo
       operationId: ConsultarCatalogo
       parameters:
         - in: path
@@ -95,10 +95,10 @@ paths:
           required: true
           schema:
             type: string
-          description: id catalogo
+          description: ID del catálogo
       responses:
         "200":
-          description: get Catalogo.
+          description: Obtener catálogo exitoso.
           content:
             application/json:
               schema:
@@ -106,21 +106,21 @@ paths:
                 items:
                   $ref: "#/components/schemas/CatalogoType"
         "400":
-          description: Peticion con datos invalidos
+          description: Petición con datos inválidos
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: "No se encontro datos de Catalogo"
+          description: "No se encontraron datos de Catálogo"
         default:
-          description: Unexpected error
+          description: Error inesperado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
     delete:
-      summary: Eliminar catalogo
+      summary: Eliminar catálogo
       operationId: DeleteCatalogo
       parameters:
         - in: path
@@ -128,31 +128,31 @@ paths:
           required: true
           schema:
             type: string
-          description: id catalogo
+          description: ID del catálogo
       responses:
         "200":
-          description: delete Catalogo.
+          description: Eliminar catálogo exitoso.
           content:
             application/json:
               schema:
                 type: boolean
         "400":
-          description: Peticion con datos invalidos
+          description: Petición con datos inválidos
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: "No se encontro datos de Catalogo"
+          description: "No se encontraron datos de Catálogo"
         default:
-          description: Unexpected error
+          description: Error inesperado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
   /v1/es/catalogo/nombre/{nombre}:
     get:
-      summary: Consulta catalogo por nombre
+      summary: Consultar catálogo por nombre
       operationId: ConsultarCatalogoPorNombre
       parameters:
         - in: path
@@ -160,10 +160,10 @@ paths:
           required: true
           schema:
             type: string
-          description: nombre catalogo
+          description: Nombre del catálogo
       responses:
         "200":
-          description: get catalogo by nombre.
+          description: Obtener catálogo por nombre exitoso.
           content:
             application/json:
               schema:
@@ -171,26 +171,24 @@ paths:
                 items:
                   $ref: "#/components/schemas/CatalogoType"
         "400":
-          description: Peticion con datos invalidos
+          description: Petición con datos inválidos
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: "No se encontro datos de Catalogo"
+          description: "No se encontraron datos de Catálogo"
         default:
-          description: Unexpected error
+          description: Error inesperado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 
 
-
 #---------------------------------------------
 #Se declaran los Modelos/Schemas del servicio
 #---------------------------------------------
-
 components:
   schemas:
     #    TYPES

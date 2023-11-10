@@ -1,21 +1,12 @@
 package com.mibanco.catalogo.es.gen.contract;
 
 import com.mibanco.catalogo.es.gen.type.CatalogoType;
-import com.mibanco.catalogo.es.gen.type.Error;
-
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
-
-
-import java.io.InputStream;
-import java.util.Map;
-import java.util.List;
-import jakarta.validation.constraints.*;
-import jakarta.validation.Valid;
-
 @Path("/v1/es/catalogo")
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2023-11-02T11:46:15.133481600-05:00[America/Bogota]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2023-11-10T14:18:30.569007-05:00[America/Bogota]")
 public interface V1Catalogo {
 
     @GET

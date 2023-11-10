@@ -1,7 +1,7 @@
 package com.mibanco.catalogo.es.controller;
 
 
-import com.mibanco.catalogo.es.constans.Constans;
+import com.mibanco.catalogo.es.constants.Constants;
 import com.mibanco.catalogo.es.dao.entity.CatalogoEntity;
 import com.mibanco.catalogo.es.gen.contract.V1Catalogo;
 import com.mibanco.catalogo.es.gen.type.CatalogoType;
@@ -33,7 +33,6 @@ public class CatalogoController implements V1Catalogo {
 
     @Override
     public Response consultarCatalogo(String idCatalogo) {
-
         LOG.info("Inicia consultarCatalogo en CatalogoController");
         try {
             catalogoValidator.validarConsulta(idCatalogo);
@@ -41,23 +40,18 @@ public class CatalogoController implements V1Catalogo {
 
             LOG.info("Finaliza consultarCatalogo en CatalogoController");
             return Response.status(Response.Status.OK).entity(catalogoType).build();
-
         } catch (ApplicationExceptionValidation e) {
-
-            LOG.error("Error en validaciones de obtencion de catalogo - CatalogoController");
+            LOG.error("Error en validaciones de obtención de catálogo - CatalogoController");
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-
         } catch (ApplicationException e) {
-
-            LOG.error(Constans.SERVICIO_INTERNAL + "consultarCatalogo en CatalogoServiceImpl exception: " + e.getMessage());
+            LOG.error(Constants.SERVICIO_INTERNAL + "consultarCatalogo en CatalogoServiceImpl exception: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(Constans.SERVICIO_INTERNAL + "consultarCatalogo, exception: " + e.getMessage()).build();
+                    .entity(Constants.SERVICIO_INTERNAL + "consultarCatalogo, exception: " + e.getMessage()).build();
         }
     }
 
     @Override
     public Response consultarCatalogoPorNombre(String nombre) {
-
         LOG.info("Inicia consultarCatalogoPorNombre en CatalogoController");
         try {
             catalogoValidator.validarConsulta(nombre);
@@ -65,72 +59,60 @@ public class CatalogoController implements V1Catalogo {
 
             LOG.info("Finaliza consultarCatalogoPorNombre en CatalogoController");
             return Response.status(Response.Status.OK).entity(listCatalogo).build();
-
         } catch (ApplicationExceptionValidation e) {
-
-            LOG.error("Error en validaciones de obtencion de catalogo - CatalogoController");
+            LOG.error("Error en validaciones de obtención de catálogo - CatalogoController");
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-
         } catch (ApplicationException e) {
-
-            LOG.error(Constans.SERVICIO_INTERNAL + "consultarCatalogoPorNombre en CatalogoServiceImpl exception: " + e.getMessage());
+            LOG.error(Constants.SERVICIO_INTERNAL + "consultarCatalogoPorNombre en CatalogoServiceImpl exception: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(Constans.SERVICIO_INTERNAL + "consultarCatalogoPorNombre, exception: " + e.getMessage()).build();
+                    .entity(Constants.SERVICIO_INTERNAL + "consultarCatalogoPorNombre, exception: " + e.getMessage()).build();
         }
     }
 
     @Override
     public Response crearCatalogo(CatalogoType catalogoType) {
-
         LOG.info("Inicia crearCatalogo en CatalogoController");
         try {
             catalogoValidator.verificarCatalogo(catalogoType);
             CatalogoEntity clienteFIC = catalogoMapper.catalogoToEntity(catalogoType);
             catalogoService.crearCatalogo(clienteFIC);
 
-            LOG.info("Finaliza crearClienteFIC en CatalogoController");
+            LOG.info("Finaliza crearCatalogo en CatalogoController");
             return Response.status(Response.Status.CREATED).entity(catalogoType).build();
-
         } catch (ApplicationExceptionValidation e) {
-
-            LOG.error("Error en validaciones de creacion de catalogo - CatalogoController");
+            LOG.error("Error en validaciones de creación de catálogo - CatalogoController");
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-
         } catch (ApplicationException e) {
-
-            LOG.error(Constans.SERVICIO_INTERNAL + "crearClienteFIC en CatalogoServiceImpl exception: " + e.getMessage());
+            LOG.error(Constants.SERVICIO_INTERNAL + "crearCatalogo en CatalogoServiceImpl exception: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(Constans.SERVICIO_INTERNAL + "crearCatalogo, exception: " + e.getMessage()).build();
+                    .entity(Constants.SERVICIO_INTERNAL + "crearCatalogo, exception: " + e.getMessage()).build();
         }
     }
 
+
     @Override
     public Response deleteCatalogo(String idCatalogo) {
-
         LOG.info("Inicia deleteCatalogo en CatalogoController");
         try {
             catalogoValidator.validarConsulta(idCatalogo);
             catalogoService.eliminarCatalogoPorId(idCatalogo);
 
             LOG.info("Finaliza deleteCatalogo en CatalogoController");
-            return Response.status(Response.Status.OK).entity("Eliminado").build();
+            return Response.status(Response.Status.OK).entity("Eliminado exitosamente").build();
 
         } catch (ApplicationExceptionValidation e) {
-
-            LOG.error("Error en validaciones de creacion de catalogo - CatalogoController");
+            LOG.error("Error en validaciones de eliminación de catálogo - CatalogoController");
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 
         } catch (ApplicationException e) {
-
-            LOG.error(Constans.SERVICIO_INTERNAL + "deleteCatalogo en CatalogoServiceImpl exception: " + e.getMessage());
+            LOG.error(Constants.SERVICIO_INTERNAL + "deleteCatalogo en CatalogoServiceImpl exception: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(Constans.SERVICIO_INTERNAL + "deleteCatalogo, exception: " + e.getMessage()).build();
+                    .entity(Constants.SERVICIO_INTERNAL + "deleteCatalogo, exception: " + e.getMessage()).build();
         }
     }
 
     @Override
     public Response updateCatalogo(CatalogoType catalogoType) {
-
         LOG.info("Inicia updateCatalogo en CatalogoController");
         try {
             catalogoValidator.verificarCatalogo(catalogoType);
@@ -138,18 +120,17 @@ public class CatalogoController implements V1Catalogo {
             catalogoService.actualizarCatalogo(catalogo);
 
             LOG.info("Finaliza updateCatalogo en CatalogoController");
-            return Response.status(Response.Status.OK).entity(catalogoType).build();
+            return Response.status(Response.Status.OK).entity("Actualizado exitosamente").build();
 
         } catch (ApplicationExceptionValidation e) {
-
-            LOG.error("Error en validaciones de creacion de catalogo - CatalogoController");
+            LOG.error("Error en validaciones de actualización de catálogo - CatalogoController");
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 
         } catch (ApplicationException e) {
-
-            LOG.error(Constans.SERVICIO_INTERNAL + "updateCatalogo en CatalogoServiceImpl exception: " + e.getMessage());
+            LOG.error(Constants.SERVICIO_INTERNAL + "updateCatalogo en CatalogoServiceImpl exception: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(Constans.SERVICIO_INTERNAL + "updateCatalogo, exception: " + e.getMessage()).build();
+                    .entity(Constants.SERVICIO_INTERNAL + "updateCatalogo, exception: " + e.getMessage()).build();
         }
     }
+
 }

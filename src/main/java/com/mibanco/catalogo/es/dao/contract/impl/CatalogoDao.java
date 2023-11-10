@@ -33,7 +33,13 @@ public class CatalogoDao implements ICatalogo {
         if (index == -1) {
             return null;
         }
-        list.set(index, new CatalogoEntity(catalogo.getCodigoDetalleCatalogo(), catalogo.getDescripcionDetalleCatalogo(), catalogo.getIdCatalogo(), catalogo.getNombreCatalogo(), catalogo.getPadreIDCatalogo()));
+        list.set(index, new CatalogoEntity(
+                catalogo.getCodigoDetalleCatalogo(),
+                catalogo.getDescripcionDetalleCatalogo(),
+                catalogo.getIdCatalogo(),
+                catalogo.getNombreCatalogo(),
+                catalogo.getPadreIDCatalogo()
+        ));
         return mapper.catalogoToType(catalogo);
     }
 
@@ -54,10 +60,7 @@ public class CatalogoDao implements ICatalogo {
                 .findFirst()
                 .orElse(null);
 
-        if (catalogo != null) {
-            return mapper.catalogoToType(catalogo);
-        }
-        return new CatalogoType();
+        return (catalogo != null) ? mapper.catalogoToType(catalogo) : new CatalogoType();
     }
 
     @Override
@@ -66,10 +69,7 @@ public class CatalogoDao implements ICatalogo {
                 .filter(x -> x.getNombreCatalogo().equals(nombre))
                 .collect(Collectors.toList());
 
-        if (catalogo != null) {
-            return catalogo;
-        }
-        return new ArrayList<>();
+        return (catalogo != null) ? catalogo : new ArrayList<>();
     }
 
     int catalogoExiste(String id) {
@@ -80,4 +80,5 @@ public class CatalogoDao implements ICatalogo {
         }
         return -1;
     }
+
 }

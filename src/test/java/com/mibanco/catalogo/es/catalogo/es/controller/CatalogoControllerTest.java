@@ -14,12 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static io.restassured.RestAssured.given;
-import static org.mockito.Mockito.mock;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static io.restassured.RestAssured.given;
+import static org.mockito.Mockito.mock;
 
 @QuarkusTest
 public class CatalogoControllerTest {

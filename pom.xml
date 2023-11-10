@@ -179,7 +179,7 @@
                             <skipOverwrite>false</skipOverwrite>
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <generateModels>true</generateModels>
-                            <inputSpec>src/main/resources/es-Calatogo-api.yaml</inputSpec>
+                            <inputSpec>src/main/resources/es-calatogo-api.yaml</inputSpec>
                             <apiNameSuffix>Catalogo</apiNameSuffix>
                             <skipValidateSpec>true</skipValidateSpec>
                             <configOptions>

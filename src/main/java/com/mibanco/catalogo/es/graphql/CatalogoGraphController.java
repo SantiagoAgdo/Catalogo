@@ -25,16 +25,15 @@ public class CatalogoGraphController {
     CatalogoServiceImpl service;
 
     @Query("consultarCatalogoPorID")
-    @Description("Consulta de Catalogo ID")
+    @Description("Consulta de Catalogo por ID")
     public CatalogoType consultarCatalogoId(@Name("id") String id) {
-
-        logger.info("Inicia consultarCatalogoId en Graphql");
+        logger.info("Inicia consultarCatalogoId en GraphQL");
         try {
             CatalogoType catalogo = service.consultarCatalogoPorId(id);
-            logger.info("Termina consultarCatalogoId en Graphql");
+            logger.info("Termina consultarCatalogoId en GraphQL");
             return catalogo;
         } catch (ApplicationException e) {
-            logger.error("Ocurrio un error en consultarCatalogoId Graphql");
+            logger.error("Ocurrió un error en consultarCatalogoId GraphQL");
             throw new ApplicationException(Response.Status.NOT_FOUND.getStatusCode(), "ERROR_SERVICIO: " + e.getMessage() + " en CatalogoGraphController");
         }
     }
@@ -42,16 +41,16 @@ public class CatalogoGraphController {
     @Query("consultarCatalogoPorNombre")
     @Description("Consulta de Catalogo por nombre")
     public List<CatalogoEntity> consultarCatalogoNombre(@Name("nombre") String nombre) {
-
-        logger.info("Inicia consultarCatalogoNombre en Graphql");
+        logger.info("Inicia consultarCatalogoNombre en GraphQL");
         try {
             List<CatalogoEntity> catalogo = service.consultarCatalogoPorNombre(nombre);
-            logger.info("Termina consultarCatalogoNombre en Graphql");
+            logger.info("Termina consultarCatalogoNombre en GraphQL");
             return catalogo;
         } catch (ApplicationException e) {
-            logger.error("Ocurrio un error en consultarCatalogoNombre Graphql");
+            logger.error("Ocurrió un error en consultarCatalogoNombre GraphQL");
             throw new ApplicationException(Response.Status.NOT_FOUND.getStatusCode(), "ERROR_SERVICIO: " + e.getMessage() + " en CatalogoGraphController");
         }
     }
+
 
 }

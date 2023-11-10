@@ -17,8 +17,8 @@ import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @GrpcService
 public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServiceGrpcImplBase {
@@ -37,21 +37,19 @@ public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServ
     @Override
     @Blocking
     public void crearCatalogo(CatalogoTypeGrpc request, StreamObserver<ResponseCatalogo> responseObs) {
-
-        LOG.info("Inicia Creacion Catalogo por GRPC");
+        LOG.info("Inicia Creación de Catálogo por gRPC");
 
         try {
             CatalogoEntity entity = mapper.catalogoGrpcToEntity(request);
             catalogoService.crearCatalogo(entity);
 
             ResponseCatalogo response = ResponseCatalogo.newBuilder().setObj(request.toBuilder()).build();
-            LOG.info("Finaliza creacion Catalogo por GRPC");
+            LOG.info("Finaliza Creación de Catálogo por gRPC");
 
             responseObs.onNext(response);
             responseObs.onCompleted();
 
         } catch (Exception e) {
-
             StatusException statusException = responseExceptionGrpc(Status.INVALID_ARGUMENT, e.getMessage());
             responseObs.onError(statusException);
         }
@@ -60,21 +58,19 @@ public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServ
     @Override
     @Blocking
     public void actualizarCatalogo(CatalogoTypeGrpc request, StreamObserver<ResponseCatalogo> responseObs) {
-
-        LOG.info("Inicia Actualizacion Catalogo por GRPC");
+        LOG.info("Inicia Actualización de Catálogo por gRPC");
 
         try {
             CatalogoEntity entity = mapper.catalogoGrpcToEntity(request);
             catalogoService.actualizarCatalogo(entity);
 
             ResponseCatalogo response = ResponseCatalogo.newBuilder().setObj(request.toBuilder()).build();
-            LOG.info("Finaliza Actualizacion Catalogo por GRPC");
+            LOG.info("Finaliza Actualización de Catálogo por gRPC");
 
             responseObs.onNext(response);
             responseObs.onCompleted();
 
         } catch (Exception e) {
-
             StatusException statusException = responseExceptionGrpc(Status.INVALID_ARGUMENT, e.getMessage());
             responseObs.onError(statusException);
         }
@@ -83,31 +79,29 @@ public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServ
     @Override
     @Blocking
     public void eliminarCatalogoPorId(DataConsulta request, StreamObserver<ResponseTxt> responseObs) {
-
-        LOG.info("Inicia Actualizacion Catalogo por GRPC");
+        LOG.info("Inicia Eliminación de Catálogo por gRPC");
 
         try {
             catalogoService.eliminarCatalogoPorId(request.getId());
             ResponseTxt responseTexto = ResponseTxt.newBuilder().setTxt("Eliminado Correctamente").build();
             responseObs.onNext(responseTexto);
 
-            LOG.info("Finaliza Actualizacion Catalogo por GRPC");
+            LOG.info("Finaliza Eliminación de Catálogo por gRPC");
             responseObs.onCompleted();
 
         } catch (Exception e) {
-
             StatusException statusException = responseExceptionGrpc(Status.INVALID_ARGUMENT, e.getMessage());
             responseObs.onError(statusException);
         }
     }
 
+
     @Override
     @Blocking
     public void consultarCatalogoPorId(DataConsulta request, StreamObserver<ResponseCatalogo> responseObs) {
+        LOG.info("Inicia consultarCatalogoPorId por gRPC");
 
-        LOG.info("Inicia consultarCatalogoPorId por GRPC");
         try {
-
             catalogoValidator.validarConsulta(request.getId());
             CatalogoType catalogo = catalogoService.consultarCatalogoPorId(request.getId());
 
@@ -118,18 +112,17 @@ public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServ
                             .setCodigoDetalleCatalogo(catalogo.getCodigoDetalleCatalogo())
                             .setDescripcionDetalleCatalogo(catalogo.getDescripcionDetalleCatalogo())
                             .setPadreIDCatalogo(catalogo.getPadreIDCatalogo())
+                            .build()
             ).build();
 
-            LOG.info("Finaliza consultarPasivo por GRPC");
+            LOG.info("Finaliza consultarCatalogoPorId por gRPC");
             responseObs.onNext(response);
             responseObs.onCompleted();
 
         } catch (ApplicationExceptionValidation e) {
-
             StatusException statusException = responseExceptionGrpc(Status.INVALID_ARGUMENT, e.getMessage());
             responseObs.onError(statusException);
         } catch (Exception e) {
-
             StatusException statusException = responseExceptionGrpc(Status.INTERNAL, e.getMessage());
             responseObs.onError(statusException);
         }
@@ -138,32 +131,31 @@ public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServ
     @Override
     @Blocking
     public void consultarCatalogoPorNombre(DataConsulta request, StreamObserver<ResponseCatalogoList> responseObs) {
-        LOG.info("Inicia consultarCatalogoPorNombre por GRPC");
+        LOG.info("Inicia consultarCatalogoPorNombre por gRPC");
+
         try {
             catalogoValidator.validarConsulta(request.getId());
-            List<CatalogoEntity> cupoList = catalogoService.consultarCatalogoPorNombre(request.getId());
+            List<CatalogoEntity> catalogoList = catalogoService.consultarCatalogoPorNombre(request.getId());
 
-            List<com.mibanco.catalogo.es.CatalogoTypeGrpc> catalogoResponse = new ArrayList<>();
-            for (CatalogoEntity catalogo : cupoList) {
-                catalogoResponse.add(com.mibanco.catalogo.es.CatalogoTypeGrpc.newBuilder()
-                        .setIdCatalogo(catalogo.getIdCatalogo())
-                        .setCodigoDetalleCatalogo(catalogo.getCodigoDetalleCatalogo().toString())
-                        .setNombreCatalogo(catalogo.getNombreCatalogo())
-                        .setDescripcionDetalleCatalogo(catalogo.getDescripcionDetalleCatalogo())
-                        .setPadreIDCatalogo(catalogo.getPadreIDCatalogo())
-                        .build());
-            }
-            ResponseCatalogoList response = ResponseCatalogoList.newBuilder().addAllObj(catalogoResponse).build();
-            LOG.info("Finaliza consultarCatalogoPorNombre por GRPC");
+            List<com.mibanco.catalogo.es.CatalogoTypeGrpc> catalogoResponseList = catalogoList.stream()
+                    .map(catalogo -> com.mibanco.catalogo.es.CatalogoTypeGrpc.newBuilder()
+                            .setIdCatalogo(catalogo.getIdCatalogo())
+                            .setCodigoDetalleCatalogo(catalogo.getCodigoDetalleCatalogo())
+                            .setNombreCatalogo(catalogo.getNombreCatalogo())
+                            .setDescripcionDetalleCatalogo(catalogo.getDescripcionDetalleCatalogo())
+                            .setPadreIDCatalogo(catalogo.getPadreIDCatalogo())
+                            .build())
+                    .collect(Collectors.toList());
+
+            ResponseCatalogoList response = ResponseCatalogoList.newBuilder().addAllObj(catalogoResponseList).build();
+            LOG.info("Finaliza consultarCatalogoPorNombre por gRPC");
 
             responseObs.onNext(response);
             responseObs.onCompleted();
 
         } catch (ApplicationExceptionValidation e) {
-
             StatusException statusException = responseExceptionGrpc(Status.INVALID_ARGUMENT, e.getMessage());
             responseObs.onError(statusException);
-
         } catch (Exception e) {
             StatusException statusException = responseExceptionGrpc(Status.INTERNAL, e.getMessage());
             responseObs.onError(statusException);
@@ -171,12 +163,12 @@ public class CatalogoGrpcController extends CatalogoServiceGrpcGrpc.CatalogoServ
     }
 
     private StatusException responseExceptionGrpc(Status statusCode, String exceptionMessage) {
-
-        LOG.error(exceptionMessage + "Exception: " + exceptionMessage);
+        LOG.error(exceptionMessage + " Exception: " + exceptionMessage);
 
         Metadata metadata = new Metadata();
         metadata.put(Metadata.Key.of("Error: ", Metadata.ASCII_STRING_MARSHALLER), exceptionMessage);
 
         return statusCode.asException(metadata);
     }
+
 }

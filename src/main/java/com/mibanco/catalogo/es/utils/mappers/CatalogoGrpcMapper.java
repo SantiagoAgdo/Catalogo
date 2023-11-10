@@ -14,7 +14,7 @@ import java.io.IOException;
 @ApplicationScoped
 public class CatalogoGrpcMapper {
 
-    private Gson obj = new Gson();
+    private final Gson obj = new Gson();
 
 
     public CatalogoEntity catalogoGrpcToEntity(CatalogoTypeGrpc grpc) {

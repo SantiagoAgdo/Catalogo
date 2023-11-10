@@ -26,45 +26,40 @@ public class CatalogoServiceImpl implements CatalogoService {
 
     @Override
     public void crearCatalogo(CatalogoEntity catalogo) {
-
-        LOG.info("Inicia Creacion de catalogo  en CatalogoServiceImpl");
+        LOG.info("Inicia Creación de catálogo en CatalogoServiceImpl");
         catalogoDao.crearCatalogo(catalogo);
-
-        LOG.info("Termina creacion de catalogo en CatalogoServiceImpl");
+        LOG.info("Termina Creación de catálogo en CatalogoServiceImpl");
     }
 
     @Override
     public CatalogoType actualizarCatalogo(CatalogoEntity catalogo) {
-
-        LOG.info("Inicia Actualizacion de catalogo  en CatalogoServiceImpl");
+        LOG.info("Inicia Actualización de catálogo en CatalogoServiceImpl");
         catalogoDao.actualizarCatalogo(catalogo);
-
-        LOG.info("Termina Actualizacion de catalogo en CatalogoServiceImpl");
+        LOG.info("Termina Actualización de catálogo en CatalogoServiceImpl");
         return mapper.catalogoToType(catalogo);
     }
 
     @Override
     public void eliminarCatalogoPorId(String id) {
-        LOG.info("Inicia eliminarCatalogoPorId  en CatalogoServiceImpl");
+        LOG.info("Inicia Eliminación de catálogo por ID en CatalogoServiceImpl");
         catalogoDao.eliminarCatalogoPorId(id);
-
-        LOG.info("Termina eliminarCatalogoPorIdo en CatalogoServiceImpl");
+        LOG.info("Termina Eliminación de catálogo por ID en CatalogoServiceImpl");
     }
 
     @Override
     public CatalogoType consultarCatalogoPorId(String id) {
-        LOG.info("Inicia consulta de catalogo  en CatalogoServiceImpl");
-
-        LOG.info("Termina consulta de catalogo en CatalogoServiceImpl");
-        return catalogoDao.consultarCatalogoPorId(id);
-
+        LOG.info("Inicia Consulta de catálogo por ID en CatalogoServiceImpl");
+        CatalogoType catalogo = catalogoDao.consultarCatalogoPorId(id);
+        LOG.info("Termina Consulta de catálogo por ID en CatalogoServiceImpl");
+        return catalogo;
     }
 
     @Override
     public List<CatalogoEntity> consultarCatalogoPorNombre(String nombre) {
-        LOG.info("Inicia consulta de catalogo por nombre en CatalogoServiceImpl");
-
-        LOG.info("Termina consulta de catalogo por nombre en CatalogoServiceImpl");
-        return catalogoDao.consultarCatalogoPorNombre(nombre);
+        LOG.info("Inicia Consulta de catálogo por nombre en CatalogoServiceImpl");
+        List<CatalogoEntity> catalogoList = catalogoDao.consultarCatalogoPorNombre(nombre);
+        LOG.info("Termina Consulta de catálogo por nombre en CatalogoServiceImpl");
+        return catalogoList;
     }
+
 }
