@@ -10,6 +10,7 @@ import com.mibanco.catalogo.es.utils.exceptions.ApplicationException;
 import com.mibanco.catalogo.es.utils.exceptions.ApplicationExceptionValidation;
 import com.mibanco.catalogo.es.utils.mappers.CatalogoMapper;
 import com.mibanco.catalogo.es.utils.validator.CatalogoValidator;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+@RegisterForReflection(targets = {CatalogoType.class})
 public class CatalogoController implements V1Catalogo {
 
     public static final Logger LOG = LoggerFactory.getLogger(CatalogoController.class);
@@ -35,10 +37,10 @@ public class CatalogoController implements V1Catalogo {
         LOG.info("Inicia consultarCatalogo en CatalogoController");
         try {
             catalogoValidator.validarConsulta(idCatalogo);
-            CatalogoType c = catalogoService.consultarCatalogoPorId(idCatalogo);
+            CatalogoType catalogoType = catalogoService.consultarCatalogoPorId(idCatalogo);
 
             LOG.info("Finaliza consultarCatalogo en CatalogoController");
-            return Response.status(Response.Status.OK).entity(c).build();
+            return Response.status(Response.Status.OK).entity(catalogoType).build();
 
         } catch (ApplicationExceptionValidation e) {
 

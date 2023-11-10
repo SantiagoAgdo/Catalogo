@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("CatalogoType")
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2023-10-02T15:37:06.939751-05:00[America/Bogota]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2023-11-02T11:46:15.133481600-05:00[America/Bogota]")
 public class CatalogoType   {
   private @Valid String codigoDetalleCatalogo;
   private @Valid String descripcionDetalleCatalogo;
